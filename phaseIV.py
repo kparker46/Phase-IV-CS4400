@@ -615,7 +615,7 @@ class StartEmployeeRole (QWidget):
             host = 'localhost',
             database = 'bank_management',
             username = 'root',
-            password = 'Kyle3231pw!')
+            password = 'barnsley')
         startemprole = mydb.cursor()
         try:
             args = [self.line1.text(), self.line10.text(), int(self.line11.text()), int(self.line12.text())]
