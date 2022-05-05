@@ -482,6 +482,7 @@ class CreateBank (QWidget):
             username = 'root',
             password = 'barnsley')
         createbank = mydb.cursor()
+        self.setWindowTitle("Success")
         try:
             args = [self.line1.text(),self.line2.text(), self.line3.text(), self.line4.text(), self.line5.text(), self.line6.text(), int(self.line7.text()), self.line8.text(), self.line9.text(), self.line10.text()]
             createbank.callproc("create_bank", args)
