@@ -65,6 +65,10 @@ class Login (QWidget):
             self.w = AdminHome()
             self.w.show()
             self.close()
+        elif (self.line1.text(), self.line2.text()) in customerdata and (self.line1.text(), self.line2.text()) in managerdata:
+            self.w = JointHome()
+            self.w.show()
+            self.close()
         elif (self.line1.text(), self.line2.text()) in customerdata:
             self.w = CustomerHome()
             self.w.show()
@@ -78,6 +82,35 @@ class Login (QWidget):
             self.setWindowTitle("Invald Login!")
             self.line1.setText("")
             self.line2.setText("")
+
+
+class JointHome (QWidget):
+    def __init__(self):
+        super().__init__()
+
+        self.setWindowTitle("Customer or Manager?")
+
+        self.vbox = QVBoxLayout()
+        self.b1 = QPushButton("Manager")
+        self.b2 = QPushButton("Customer")
+
+        self.b1.clicked.connect(self.on_b1_click)
+        self.b2.clicked.connect(self.on_b2_click)
+
+        self.vbox.addWidget(self.b1)
+        self.vbox.addWidget(self.b2)
+
+        self.setLayout(self.vbox)
+
+    def on_b1_click(self):
+        self.w = ManagerHome()
+        self.w.show()
+        self.close()
+
+    def on_b2_click(self):
+        self.w = CustomerHome()
+        self.w.show()
+        self.close()
 
 
 
