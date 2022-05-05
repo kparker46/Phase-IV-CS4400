@@ -114,7 +114,6 @@ class JointHome (QWidget):
 
 
 
-
 class AdminHome (QWidget):
     def __init__(self):
         super().__init__()
@@ -468,7 +467,7 @@ class CreateBank (QWidget):
             createbank.close()
             mydb.close()
         except:
-            print("oops")
+            self.setWindowTitle("Error Occurred!")
 
 
     def on_b3_click(self):
@@ -665,7 +664,7 @@ class StartEmployeeRole (QWidget):
             startemprole.close()
             mydb.close()
         except:
-            print("oops")
+            self.setWindowTitle("Error Occurred!")
 
     def on_b3_click(self):
         self.w = ManageUserPage()
@@ -783,7 +782,7 @@ class StartCustomerRole (QWidget):
             startcustrole.close()
             mydb.close()
         except:
-            print("oops")
+            self.setWindowTitle("Error Occurred!")
 
     def on_b3_click(self):
         self.w = ManageUserPage()
@@ -838,7 +837,7 @@ class StopEmployeeRole (QWidget):
             stopemprole.close()
             mydb.close()
         except:
-            print("oops")
+            self.setWindowTitle("Error Occurred!")
 
     def on_b3_click(self):
         self.w = ManageUserPage()
@@ -895,7 +894,7 @@ class StopCustomerRole (QWidget):
             stopcustrole.close()
             mydb.close()
         except:
-            print("oops")
+            self.setWindowTitle("Error Occurred!")
 
 
     def on_b3_click(self):
@@ -965,7 +964,7 @@ class HireWorker (QWidget):
             hirework.close()
             mydb.close()
         except:
-            print("oops")
+            self.setWindowTitle("Error Occurred!")
 
     def on_b3_click(self):
         self.w = AdminHome()
@@ -1033,7 +1032,7 @@ class ReplaceManager (QWidget):
             replacemanager.close()
             mydb.close()
         except:
-            print("oops")
+            self.setWindowTitle("Error Occurred!")
 
 
 
@@ -1210,7 +1209,7 @@ class AddAccountAccess (QWidget):
             addaccess.close()
             mydb.close()
         except:
-            print("oops")
+            self.setWindowTitle("Error Occurred!")
 
     def on_b3_click(self):
         self.w = ManageAccounts()
@@ -1287,7 +1286,7 @@ class RemoveAccountAccess (QWidget):
             removeaccess.close()
             mydb.close()
         except:
-            print("oops")
+            self.setWindowTitle("Error Occurred!")
 
 
     def on_b3_click(self):
@@ -1356,7 +1355,7 @@ class CreateFee (QWidget):
             createfee.close()
             mydb.close()
         except:
-            print("oops")
+            self.setWindowTitle("Error Occurred!")
 
 
     def on_b3_click(self):
@@ -1488,7 +1487,7 @@ class StartOverdraft (QWidget):
             startoverdraft.close()
             mydb.close()
         except:
-            print("oops")
+            self.setWindowTitle("Error Occurred!")
 
     def on_b3_click(self):
         self.w = ManageOverdraft()
@@ -1556,7 +1555,7 @@ class StopOverdraft (QWidget):
             stopoverdraft.close()
             mydb.close()
         except:
-            print("oops")
+            self.setWindowTitle("Error Occurred!")
 
     def on_b3_click(self):
         self.w = ManageOverdraft()
@@ -1679,7 +1678,7 @@ class AccountDeposit (QWidget):
             deposit.close()
             mydb.close()
         except:
-            print("oops")
+            self.setWindowTitle("Error Occurred!")
 
     def on_b3_click(self):
         self.w = DepoWith()
@@ -1763,7 +1762,7 @@ class AccountWithdrawal (QWidget):
             withdrawal.close()
             mydb.close()
         except:
-            print("oops")
+            self.setWindowTitle("Error Occurred!")
 
     def on_b3_click(self):
         self.w = DepoWith()
@@ -1861,7 +1860,7 @@ class AccountTransfer (QWidget):
             transfer.close()
             mydb.close()
         except:
-            print("oops")
+            self.setWindowTitle("Error Occurred!")
 
     def on_b3_click(self):
         self.w = CustomerHome()
