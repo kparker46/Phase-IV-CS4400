@@ -790,7 +790,7 @@ class StopCustomerRole (QWidget):
         stopcustrole = mydb.cursor()
         try:
             args = [self.line1.text()]
-            stopcustrole.callproc("stop_customer_role", args)
+            stopcustrole.callproc("stop_cust_role", args)
             mydb.commit()
             stopcustrole.close()
             mydb.close()
