@@ -1021,6 +1021,385 @@ class CreateFee (QWidget):
         except:
             print("oops")
             
+            
+            
+            
+class StartOverdraft (QWidget):
+    def __init__(self):
+        super().__init__()
+        self.setWindowTitle("Start Overdraft")
+        self.vbox = QVBoxLayout()
+        self.hbox1 = QHBoxLayout()
+        self.hbox2 = QHBoxLayout()
+        self.hbox3 = QHBoxLayout()
+        self.hbox4 = QHBoxLayout()
+        self.hbox5 = QHBoxLayout()
+        self.hbox6 = QHBoxLayout()
+        self.prompt1 = QLabel("Requester ID")
+        self.line1 = QLineEdit()
+        self.prompt2 = QLabel("Checking Bank ID")
+        self.line2 = QLineEdit()
+        self.prompt3 = QLabel("Checking Account ID")
+        self.line3 = QLineEdit()
+        self.prompt4 = QLabel("Savings Bank ID")
+        self.line4 = QLineEdit()
+        self.prompt5 = QLabel("Savings Account ID")
+        self.line5 = QLineEdit()
+
+        self.b1 = QPushButton("Cancel")
+        self.b2 = QPushButton("Create")
+        self.b1.clicked.connect(self.on_b1_click)
+        self.b2.clicked.connect(self.on_b2_click)
+
+        self.hbox1.addWidget(self.prompt1)
+        self.hbox1.addWidget(self.line1)
+        self.hbox2.addWidget(self.prompt2)
+        self.hbox2.addWidget(self.line2)
+        self.hbox3.addWidget(self.prompt3)
+        self.hbox3.addWidget(self.line3)
+        self.hbox4.addWidget(self.prompt4)
+        self.hbox4.addWidget(self.line4)
+        self.hbox5.addWidget(self.prompt5)
+        self.hbox5.addWidget(self.line5)
+        self.hbox6.addWidget(self.b1)
+        self.hbox6.addWidget(self.b2)
+
+
+        self.vbox.addLayout(self.hbox1)
+        self.vbox.addLayout(self.hbox2)
+        self.vbox.addLayout(self.hbox3)
+        self.vbox.addLayout(self.hbox4)
+        self.vbox.addLayout(self.hbox5)
+        self.vbox.addLayout(self.hbox6)
+        self.setLayout(self.vbox)
+
+    def on_b1_click(self):
+        self.line1.setText("")
+        self.line2.setText("")
+        self.line3.setText("")
+        self.line4.setText("")
+        self.line5.setText("")
+
+    def on_b2_click(self):
+        mydb = s.connect(
+            host = 'localhost',
+            database = 'bank_management',
+            username = 'root',
+            password = 'barnsley')
+        startoverdraft = mydb.cursor()
+        try:
+            args = [self.line1.text(),self.line2.text(), self.line3.text(), self.line4.text(), self.line5.text()]
+            startoverdraft.callproc("start_overdraft", args)
+            mydb.commit()
+            startoverdraft.close()
+            mydb.close()
+        except:
+            print("oops")
+
+
+
+
+
+class StopOverdraft (QWidget):
+    def __init__(self):
+        super().__init__()
+        self.setWindowTitle("Stop Overdraft")
+        self.vbox = QVBoxLayout()
+        self.hbox1 = QHBoxLayout()
+        self.hbox2 = QHBoxLayout()
+        self.hbox3 = QHBoxLayout()
+        self.hbox4 = QHBoxLayout()
+        self.prompt1 = QLabel("Requester ID")
+        self.line1 = QLineEdit()
+        self.prompt2 = QLabel("Checking Bank ID")
+        self.line2 = QLineEdit()
+        self.prompt3 = QLabel("Checking Account ID")
+        self.line3 = QLineEdit()
+
+        self.b1 = QPushButton("Cancel")
+        self.b2 = QPushButton("Create")
+        self.b1.clicked.connect(self.on_b1_click)
+        self.b2.clicked.connect(self.on_b2_click)
+
+        self.hbox1.addWidget(self.prompt1)
+        self.hbox1.addWidget(self.line1)
+        self.hbox2.addWidget(self.prompt2)
+        self.hbox2.addWidget(self.line2)
+        self.hbox3.addWidget(self.prompt3)
+        self.hbox3.addWidget(self.line3)
+        self.hbox4.addWidget(self.b1)
+        self.hbox4.addWidget(self.b2)
+
+
+        self.vbox.addLayout(self.hbox1)
+        self.vbox.addLayout(self.hbox2)
+        self.vbox.addLayout(self.hbox3)
+        self.vbox.addLayout(self.hbox4)
+        self.setLayout(self.vbox)
+
+    def on_b1_click(self):
+        self.line1.setText("")
+        self.line2.setText("")
+        self.line3.setText("")
+
+    def on_b2_click(self):
+        mydb = s.connect(
+            host = 'localhost',
+            database = 'bank_management',
+            username = 'root',
+            password = 'barnsley')
+        stopoverdraft = mydb.cursor()
+        try:
+            args = [self.line1.text(),self.line2.text(), self.line3.text()]
+            stopoverdraft.callproc("stop_overdraft", args)
+            mydb.commit()
+            stopoverdraft.close()
+            mydb.close()
+        except:
+            print("oops")
+
+
+
+
+
+class AccountDeposit (QWidget):
+    def __init__(self):
+        super().__init__()
+        self.setWindowTitle("Account Deposit")
+        self.vbox = QVBoxLayout()
+        self.hbox1 = QHBoxLayout()
+        self.hbox2 = QHBoxLayout()
+        self.hbox3 = QHBoxLayout()
+        self.hbox4 = QHBoxLayout()
+        self.hbox5 = QHBoxLayout()
+        self.hbox6 = QHBoxLayout()
+        self.prompt1 = QLabel("Requester ID")
+        self.line1 = QLineEdit()
+        self.prompt2 = QLabel("Deposit Amount")
+        self.line2 = QLineEdit()
+        self.prompt3 = QLabel("Bank ID")
+        self.line3 = QLineEdit()
+        self.prompt4 = QLabel("Account ID")
+        self.line4 = QLineEdit()
+        self.prompt5 = QLabel("Deposit Date")
+        self.line5 = QLineEdit()
+
+        self.b1 = QPushButton("Cancel")
+        self.b2 = QPushButton("Create")
+        self.b1.clicked.connect(self.on_b1_click)
+        self.b2.clicked.connect(self.on_b2_click)
+
+        self.hbox1.addWidget(self.prompt1)
+        self.hbox1.addWidget(self.line1)
+        self.hbox2.addWidget(self.prompt2)
+        self.hbox2.addWidget(self.line2)
+        self.hbox3.addWidget(self.prompt3)
+        self.hbox3.addWidget(self.line3)
+        self.hbox4.addWidget(self.prompt4)
+        self.hbox4.addWidget(self.line4)
+        self.hbox5.addWidget(self.prompt5)
+        self.hbox5.addWidget(self.line5)
+        self.hbox6.addWidget(self.b1)
+        self.hbox6.addWidget(self.b2)
+
+
+        self.vbox.addLayout(self.hbox1)
+        self.vbox.addLayout(self.hbox2)
+        self.vbox.addLayout(self.hbox3)
+        self.vbox.addLayout(self.hbox4)
+        self.vbox.addLayout(self.hbox5)
+        self.vbox.addLayout(self.hbox6)
+        self.setLayout(self.vbox)
+
+    def on_b1_click(self):
+        self.line1.setText("")
+        self.line2.setText("")
+        self.line3.setText("")
+        self.line4.setText("")
+        self.line5.setText("")
+
+    def on_b2_click(self):
+        mydb = s.connect(
+            host = 'localhost',
+            database = 'bank_management',
+            username = 'root',
+            password = 'barnsley')
+        deposit = mydb.cursor()
+        try:
+            args = [self.line1.text(), int(self.line2.text()), self.line3.text(), self.line4.text(), self.line5.text()]
+            deposit.callproc("account_deposit", args)
+            mydb.commit()
+            deposit.close()
+            mydb.close()
+        except:
+            print("oops")
+
+
+
+
+
+class AccountWithdrawal (QWidget):
+    def __init__(self):
+        super().__init__()
+        self.setWindowTitle("Account Withdrawal")
+        self.vbox = QVBoxLayout()
+        self.hbox1 = QHBoxLayout()
+        self.hbox2 = QHBoxLayout()
+        self.hbox3 = QHBoxLayout()
+        self.hbox4 = QHBoxLayout()
+        self.hbox5 = QHBoxLayout()
+        self.hbox6 = QHBoxLayout()
+        self.prompt1 = QLabel("Requester ID")
+        self.line1 = QLineEdit()
+        self.prompt2 = QLabel("Withdrawal Amount")
+        self.line2 = QLineEdit()
+        self.prompt3 = QLabel("Bank ID")
+        self.line3 = QLineEdit()
+        self.prompt4 = QLabel("Account ID")
+        self.line4 = QLineEdit()
+        self.prompt5 = QLabel("Withdrawal Date")
+        self.line5 = QLineEdit()
+
+        self.b1 = QPushButton("Cancel")
+        self.b2 = QPushButton("Create")
+        self.b1.clicked.connect(self.on_b1_click)
+        self.b2.clicked.connect(self.on_b2_click)
+
+        self.hbox1.addWidget(self.prompt1)
+        self.hbox1.addWidget(self.line1)
+        self.hbox2.addWidget(self.prompt2)
+        self.hbox2.addWidget(self.line2)
+        self.hbox3.addWidget(self.prompt3)
+        self.hbox3.addWidget(self.line3)
+        self.hbox4.addWidget(self.prompt4)
+        self.hbox4.addWidget(self.line4)
+        self.hbox5.addWidget(self.prompt5)
+        self.hbox5.addWidget(self.line5)
+        self.hbox6.addWidget(self.b1)
+        self.hbox6.addWidget(self.b2)
+
+
+        self.vbox.addLayout(self.hbox1)
+        self.vbox.addLayout(self.hbox2)
+        self.vbox.addLayout(self.hbox3)
+        self.vbox.addLayout(self.hbox4)
+        self.vbox.addLayout(self.hbox5)
+        self.vbox.addLayout(self.hbox6)
+        self.setLayout(self.vbox)
+
+    def on_b1_click(self):
+        self.line1.setText("")
+        self.line2.setText("")
+        self.line3.setText("")
+        self.line4.setText("")
+        self.line5.setText("")
+
+    def on_b2_click(self):
+        mydb = s.connect(
+            host = 'localhost',
+            database = 'bank_management',
+            username = 'root',
+            password = 'barnsley')
+        withdrawal = mydb.cursor()
+        try:
+            args = [self.line1.text(), int(self.line2.text()), self.line3.text(), self.line4.text(), self.line5.text()]
+            withdrawal.callproc("account_withdrawal", args)
+            mydb.commit()
+            withdrawal.close()
+            mydb.close()
+        except:
+            print("oops")
+
+
+
+
+
+class AccountTransfer (QWidget):
+    def __init__(self):
+        super().__init__()
+        self.setWindowTitle("Create Bank")
+        self.vbox = QVBoxLayout()
+        self.hbox1 = QHBoxLayout()
+        self.hbox2 = QHBoxLayout()
+        self.hbox3 = QHBoxLayout()
+        self.hbox4 = QHBoxLayout()
+        self.hbox5 = QHBoxLayout()
+        self.hbox6 = QHBoxLayout()
+        self.hbox7 = QHBoxLayout()
+        self.hbox8 = QHBoxLayout()
+        self.prompt1 = QLabel("Requester ID")
+        self.line1 = QLineEdit()
+        self.prompt2 = QLabel("Transfer Amount")
+        self.line2 = QLineEdit()
+        self.prompt3 = QLabel("Bank ID - Transfer From")
+        self.line3 = QLineEdit()
+        self.prompt4 = QLabel("Account ID - Transfer From")
+        self.line4 = QLineEdit()
+        self.prompt5 = QLabel("Bank ID - Transfer To")
+        self.line5 = QLineEdit()
+        self.prompt6 = QLabel("Account ID - Transfer To")
+        self.line6 = QLineEdit()
+        self.prompt7 = QLabel("Transfer Date")
+        self.line7 = QLineEdit()
+
+        self.b1 = QPushButton("Cancel")
+        self.b2 = QPushButton("Create")
+        self.b1.clicked.connect(self.on_b1_click)
+        self.b2.clicked.connect(self.on_b2_click)
+
+        self.hbox1.addWidget(self.prompt1)
+        self.hbox1.addWidget(self.line1)
+        self.hbox2.addWidget(self.prompt2)
+        self.hbox2.addWidget(self.line2)
+        self.hbox3.addWidget(self.prompt3)
+        self.hbox3.addWidget(self.line3)
+        self.hbox4.addWidget(self.prompt4)
+        self.hbox4.addWidget(self.line4)
+        self.hbox5.addWidget(self.prompt5)
+        self.hbox5.addWidget(self.line5)
+        self.hbox6.addWidget(self.prompt6)
+        self.hbox6.addWidget(self.line6)
+        self.hbox7.addWidget(self.prompt7)
+        self.hbox7.addWidget(self.line7)
+        self.hbox8.addWidget(self.b1)
+        self.hbox8.addWidget(self.b2)
+
+
+        self.vbox.addLayout(self.hbox1)
+        self.vbox.addLayout(self.hbox2)
+        self.vbox.addLayout(self.hbox3)
+        self.vbox.addLayout(self.hbox4)
+        self.vbox.addLayout(self.hbox5)
+        self.vbox.addLayout(self.hbox6)
+        self.vbox.addLayout(self.hbox7)
+        self.vbox.addLayout(self.hbox8)
+        self.setLayout(self.vbox)
+
+    def on_b1_click(self):
+        self.line1.setText("")
+        self.line2.setText("")
+        self.line3.setText("")
+        self.line4.setText("")
+        self.line5.setText("")
+        self.line6.setText("")
+        self.line7.setText("")
+
+    def on_b2_click(self):
+        mydb = s.connect(
+            host = 'localhost',
+            database = 'bank_management',
+            username = 'root',
+            password = 'barnsley')
+        transfer = mydb.cursor()
+        try:
+            args = [self.line1.text(), int(self.line2.text()), self.line3.text(), self.line4.text(), self.line5.text(), self.line6.text(), self.line7.text()]
+            transfer.callproc("account_transfer", args)
+            mydb.commit()
+            transfer.close()
+            mydb.close()
+        except:
+            print("oops")
+            
 
 if __name__ == '__main__':
     app = QApplication(sys.argv)
