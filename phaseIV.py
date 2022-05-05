@@ -7,10 +7,10 @@ from PyQt5.QtWidgets import (QApplication, QWidget, QPushButton, QVBoxLayout, QL
 
 
 
-'''
+
 class Login (QWidget):
     def __init__(self):
-        super.__init__()
+        super().__init__()
 
         self.setWindowTitle("Login")
         self.vbox = QVBoxLayout()
@@ -23,10 +23,100 @@ class Login (QWidget):
         self.line2 = QLineEdit()
 
         self.b1 = QPushButton("Login")
+        self.b1.clicked.connect(self.on_b1_click)
 
 
-        self.hbox1.addWidget(prompt1)
-'''
+        self.hbox1.addWidget(self.prompt1)
+        self.hbox1.addWidget(self.line1)
+        self.hbox2.addWidget(self.prompt2)
+        self.hbox2.addWidget(self.line2)
+
+        self.vbox.addLayout(self.hbox1)
+        self.vbox.addLayout(self.hbox2)
+        self.vbox.addWidget(self.b1)
+
+        self.setLayout(self.vbox)
+
+
+    def on_b1_click(self):
+        mydb = s.connect(
+            host = 'localhost',
+            database = 'bank_management',
+            username = 'root',
+            password = 'barnsley')
+
+
+
+
+        cursor = mydb.cursor()
+
+        cursor.execute("select * from system_admin natural join person")
+
+        data = cursor.fetchall()
+        if (self.line1.text(), self.line2.text()) in data:
+            self.w = AdminHome()
+            self.w.show()
+            self.close()
+        else:
+            self.setWindowTitle("Invald Login!")
+            self.line1.setText("")
+            self.line2.setText("")
+
+
+
+
+class AdminHome (QWidget):
+    def __init__(self):
+        super().__init__()
+
+        self.setWindowTitle("Admin Menu")
+        self.hbox = QHBoxLayout()
+        self.vbox1 = QVBoxLayout()
+        self.vbox2 = QVBoxLayout()
+
+        self.b1 = QPushButton("View Stats")
+        self.b2 = QPushButton("Create Corporation")
+        self.b2.clicked.connect(self.on_b2_click)
+        self.b3 = QPushButton("Create Fee")
+        self.b4 = QPushButton("Manage Users")
+        self.b5 = QPushButton("Manage Overdraft")
+        self.b6 = QPushButton("Hire Worker")
+        self.b7 = QPushButton("Pay Employees")
+        self.b8 = QPushButton("Replace Manager")
+        self.b9 = QPushButton("Manage Accounts")
+        self.b10 = QPushButton("Create Bank")
+
+        self.vbox1.addWidget(self.b1)
+        self.vbox1.addWidget(self.b2)
+        self.vbox1.addWidget(self.b3)
+        self.vbox1.addWidget(self.b4)
+        self.vbox1.addWidget(self.b5)
+        self.vbox2.addWidget(self.b6)
+        self.vbox2.addWidget(self.b7)
+        self.vbox2.addWidget(self.b8)
+        self.vbox2.addWidget(self.b9)
+        self.vbox2.addWidget(self.b10)
+
+        self.hbox.addLayout(self.vbox1)
+        self.hbox.addLayout(self.vbox2)
+
+        self.setLayout(self.hbox)
+
+    def on_b2_click(self):
+        self.w = CreateCorporation()
+        self.w.show()
+        self.close()
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -53,8 +143,10 @@ class CreateCorporation (QWidget):
 
         self.b1 = QPushButton("Cancel")
         self.b2 = QPushButton("Create")
+        self.b3 = QPushButton("Return to Home")
         self.b1.clicked.connect(self.on_b1_click)
         self.b2.clicked.connect(self.on_b2_click)
+        self.b3.clicked.connect(self.on_b3_click)
 
         self.hbox1.addWidget(self.prompt1)
         self.hbox1.addWidget(self.line1)
@@ -73,6 +165,7 @@ class CreateCorporation (QWidget):
         self.vbox.addLayout(self.hbox3)
         self.vbox.addLayout(self.hbox4)
         self.vbox.addLayout(self.hbox5)
+        self.vbox.addWidget(self.b3)
         self.setLayout(self.vbox)
 
     def on_b1_click(self):
@@ -80,6 +173,7 @@ class CreateCorporation (QWidget):
         self.line2.setText("")
         self.line3.setText("")
         self.line4.setText("")
+        self.setWindowTitle("Create Corporation")
 
     def on_b2_click(self):
         mydb = s.connect(
@@ -95,11 +189,11 @@ class CreateCorporation (QWidget):
             createcorp.close()
             mydb.close()
         except:
-            print("oops")
-
-
-
-
+            self.setWindowTitle("Invalid Inputs/Blank Inputs")
+    def on_b3_click(self):
+        self.w = AdminHome()
+        self.w.show()
+        self.close()
 
 class CreateBank (QWidget):
     def __init__(self):
@@ -204,9 +298,6 @@ class CreateBank (QWidget):
 
 if __name__ == '__main__':
     app = QApplication(sys.argv)
-    main = CreateBank()
+    main = Login()
     main.show()
     sys.exit(app.exec_())
-
-
-
