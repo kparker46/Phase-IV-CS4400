@@ -643,7 +643,6 @@ class StartCustomerRole (QWidget):
         self.hbox11 = QHBoxLayout()
         self.prompt1 = QLabel("Customer ID")
         self.line1 = QLineEdit()
-        
 
         self.b1 = QPushButton("Cancel")
         self.b2 = QPushButton("Create")
@@ -654,13 +653,12 @@ class StartCustomerRole (QWidget):
 
         self.hbox1.addWidget(self.prompt1)
         self.hbox1.addWidget(self.line1)
-       
         self.hbox11.addWidget(self.b1)
         self.hbox11.addWidget(self.b2)
 
 
         self.vbox.addLayout(self.hbox1)
-       
+        self.vbox.addLayout(self.hbox11)
         self.vbox.addWidget(self.b3)
         self.setLayout(self.vbox)
 
@@ -672,7 +670,7 @@ class StartCustomerRole (QWidget):
             host = 'localhost',
             database = 'bank_management',
             username = 'root',
-            password = 'barnsley')
+            password = 'barnsley!')
         startcustrole = mydb.cursor()
         try:
             args = [self.line1.text()]
@@ -680,7 +678,6 @@ class StartCustomerRole (QWidget):
             mydb.commit()
             startcustrole.close()
             mydb.close()
-            self.setWindowTitle("Success!")
         except:
             self.setWindowTitle("Error Occurred!")
 
