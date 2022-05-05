@@ -1473,7 +1473,122 @@ class AccountTransfer (QWidget):
         self.close()
         
         
-        
+class DisplayCorporationStats (QWidget):
+    def __init__(self):
+        super().__init__()
+
+        self.setWindowTitle("Display Corporation Stats")
+        self.vbox = QVBoxLayout()
+        self.table = QTableWidget()
+        self.b1 = QPushButton("Return To View Stats")
+        self.b1.clicked.connect(self.on_b1_click)
+         
+        self.table.setColumnCount(6)
+        self.table.setHorizontalHeaderLabels(["Corporation ID", "Short Name", "Formal Name", "Number of\nBanks", "Corporation\nAssets ($)", "Total Assets ($)"])
+        mydb = s.connect(
+            host = 'localhost',
+            database = 'bank_management',
+            username = 'root',
+            password = 'barnsley')
+        cur = mydb.cursor()
+        sqlquery = "select * from display_corporation_stats"
+        tablerow = 0
+        rows = cur.execute(sqlquery)
+        data = cur.fetchall()
+        self.table.setRowCount(len(data))
+        for row in data:
+            self.table.setItem(tablerow, 0, QTableWidgetItem(str(row[0])))
+            self.table.setItem(tablerow, 1, QTableWidgetItem(str(row[1])))
+            self.table.setItem(tablerow, 2, QTableWidgetItem(str(row[2])))
+            self.table.setItem(tablerow, 3, QTableWidgetItem(str(row[3])))
+            self.table.setItem(tablerow, 4, QTableWidgetItem(str(row[4])))
+            self.table.setItem(tablerow, 5, QTableWidgetItem(str(row[5])))
+            tablerow += 1
+
+        cur.close()
+        mydb.close()
+
+        header = self.table.horizontalHeader()       
+        header.setSectionResizeMode(0, QHeaderView.ResizeToContents)
+        header.setSectionResizeMode(1, QHeaderView.ResizeToContents)
+        header.setSectionResizeMode(2, QHeaderView.ResizeToContents)
+        header.setSectionResizeMode(3, QHeaderView.ResizeToContents)
+        header.setSectionResizeMode(4, QHeaderView.ResizeToContents)
+        header.setSectionResizeMode(5, QHeaderView.ResizeToContents)
+
+
+        self.vbox.addWidget(self.table)
+        self.vbox.addWidget(self.b1)
+        self.setLayout(self.vbox)
+
+    def on_b1_click(self):
+
+        self.stats = ViewStats()
+        self.stats.show()
+        self.close()  
+       
+ 
+class DisplayBankStats (QWidget):
+    def __init__(self):
+        super().__init__()
+
+        self.setWindowTitle("Display Bank Stats")
+        self.vbox = QVBoxLayout()
+        self.table = QTableWidget()
+        self.b1 = QPushButton("Return To View Stats")
+        self.b1.clicked.connect(self.on_b1_click)
+         
+        self.table.setColumnCount(10)
+        self.table.setHorizontalHeaderLabels(["Bank ID", "Corporation Name", "Bank Name", "Street", "State", "Zip", "Number\nof\nAccounts", "Bank Assets ($)", "Total Assets ($)"])
+        mydb = s.connect(
+            host = 'localhost',
+            database = 'bank_management',
+            username = 'root',
+            password = 'barnsley')
+        cur = mydb.cursor()
+        sqlquery = "select * from display_bank_stats"
+        tablerow = 0
+        rows = cur.execute(sqlquery)
+        data = cur.fetchall()
+        self.table.setRowCount(len(data))
+        for row in data:
+            self.table.setItem(tablerow, 0, QTableWidgetItem(str(row[0])))
+            self.table.setItem(tablerow, 1, QTableWidgetItem(str(row[1])))
+            self.table.setItem(tablerow, 2, QTableWidgetItem(str(row[2])))
+            self.table.setItem(tablerow, 3, QTableWidgetItem(str(row[3])))
+            self.table.setItem(tablerow, 4, QTableWidgetItem(str(row[4])))
+            self.table.setItem(tablerow, 5, QTableWidgetItem(str(row[5])))
+            self.table.setItem(tablerow, 6, QTableWidgetItem(str(row[6])))
+            self.table.setItem(tablerow, 7, QTableWidgetItem(str(row[7])))
+            self.table.setItem(tablerow, 8, QTableWidgetItem(str(row[8])))
+            self.table.setItem(tablerow, 9, QTableWidgetItem(str(row[9])))
+            tablerow += 1
+
+        cur.close()
+        mydb.close()
+
+        header = self.table.horizontalHeader()       
+        header.setSectionResizeMode(0, QHeaderView.ResizeToContents)
+        header.setSectionResizeMode(1, QHeaderView.ResizeToContents)
+        header.setSectionResizeMode(2, QHeaderView.ResizeToContents)
+        header.setSectionResizeMode(3, QHeaderView.ResizeToContents)
+        header.setSectionResizeMode(4, QHeaderView.ResizeToContents)
+        header.setSectionResizeMode(5, QHeaderView.ResizeToContents)
+        header.setSectionResizeMode(6, QHeaderView.ResizeToContents)
+        header.setSectionResizeMode(7, QHeaderView.ResizeToContents)
+        header.setSectionResizeMode(8, QHeaderView.ResizeToContents)
+        header.setSectionResizeMode(9, QHeaderView.ResizeToContents)
+
+
+        self.vbox.addWidget(self.table)
+        self.vbox.addWidget(self.b1)
+        self.setLayout(self.vbox)
+
+    def on_b1_click(self):
+
+        self.stats = ViewStats()
+        self.stats.show()
+        self.close()
         
         
 class DisplayCustomerStats (QWidget):
