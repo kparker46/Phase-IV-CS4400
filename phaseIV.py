@@ -1438,7 +1438,7 @@ class AccountTransfer (QWidget):
             host = 'localhost',
             database = 'bank_management',
             username = 'root',
-            password = 'Wolfstein1')
+            password = 'barnsley')
         cur = mydb.cursor()
         sqlquery = "select * from display_account_stats"
         tablerow = 0
