@@ -396,6 +396,7 @@ class CreateBank (QWidget):
         self.hbox8 = QHBoxLayout()
         self.hbox9 = QHBoxLayout()
         self.hbox10 = QHBoxLayout()
+        self.hbox11 = QHBoxLayout()
         self.prompt1 = QLabel("Bank ID")
         self.line1 = QLineEdit()
         self.prompt2 = QLabel("Bank Name")
@@ -414,6 +415,8 @@ class CreateBank (QWidget):
         self.line8 = QLineEdit()
         self.prompt9 = QLabel("Manager")
         self.line9 = QLineEdit()
+        self.prompt10 = QLabel("Employee")
+        self.line10 = QLineEdit()
 
         self.b1 = QPushButton("Cancel")
         self.b2 = QPushButton("Create")
@@ -440,8 +443,10 @@ class CreateBank (QWidget):
         self.hbox8.addWidget(self.line8)
         self.hbox9.addWidget(self.prompt9)
         self.hbox9.addWidget(self.line9)
-        self.hbox10.addWidget(self.b1)
-        self.hbox10.addWidget(self.b2)
+        self.hbox10.addWidget(self.prompt10)
+        self.hbox10.addWidget(self.line10)
+        self.hbox11.addWidget(self.b1)
+        self.hbox11.addWidget(self.b2)
 
 
         self.vbox.addLayout(self.hbox1)
@@ -454,6 +459,7 @@ class CreateBank (QWidget):
         self.vbox.addLayout(self.hbox8)
         self.vbox.addLayout(self.hbox9)
         self.vbox.addLayout(self.hbox10)
+        self.vbox.addLayout(self.hbox11)
         self.vbox.addWidget(self.b3)
         self.setLayout(self.vbox)
 
@@ -467,6 +473,7 @@ class CreateBank (QWidget):
         self.line7.setText("")
         self.line8.setText("")
         self.line9.setText("")
+        self.line10.setText("")
 
     def on_b2_click(self):
         mydb = s.connect(
@@ -476,12 +483,11 @@ class CreateBank (QWidget):
             password = 'barnsley')
         createbank = mydb.cursor()
         try:
-            args = [self.line1.text(),self.line2.text(), self.line3.text(), self.line4.text(), self.line5.text(), self.line6.text(), int(self.line7.text()), self.line8.text(), self.line9.text(), ""]
+            args = [self.line1.text(),self.line2.text(), self.line3.text(), self.line4.text(), self.line5.text(), self.line6.text(), int(self.line7.text()), self.line8.text(), self.line9.text(), self.line10.text()]
             createbank.callproc("create_bank", args)
             mydb.commit()
             createbank.close()
             mydb.close()
-            self.setWindowTitle("Success!")
         except:
             self.setWindowTitle("Error Occurred!")
 
