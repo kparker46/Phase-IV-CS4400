@@ -765,6 +765,262 @@ class ReplaceManager (QWidget):
         except:
             print("oops")
 
+            
+            
+            
+class AddAccountAccess (QWidget):
+    def __init__(self):
+        super().__init__()
+        self.setWindowTitle("Add Account Access")
+        self.vbox = QVBoxLayout()
+        self.hbox1 = QHBoxLayout()
+        self.hbox2 = QHBoxLayout()
+        self.hbox3 = QHBoxLayout()
+        self.hbox4 = QHBoxLayout()
+        self.hbox5 = QHBoxLayout()
+        self.hbox6 = QHBoxLayout()
+        self.hbox7 = QHBoxLayout()
+        self.hbox8 = QHBoxLayout()
+        self.hbox9 = QHBoxLayout()
+        self.hbox10 = QHBoxLayout()
+        self.hbox11 = QHBoxLayout()
+        self.hbox12 = QHBoxLayout()
+        self.hbox13 = QHBoxLayout()
+        self.prompt1 = QLabel("Requester ID")
+        self.line1 = QLineEdit()
+        self.prompt2 = QLabel("Customer ID")
+        self.line2 = QLineEdit()
+        self.prompt3 = QLabel("Account Type")
+        self.line3 = QComboBox()
+        self.line3.addItems(["Savings", "Market", "Checking"])
+        self.prompt4 = QLabel("Bank ID")
+        self.line4 = QLineEdit()
+        self.prompt5 = QLabel("Account ID")
+        self.line5 = QLineEdit()
+        self.prompt6 = QLabel("Balance")
+        self.line6 = QLineEdit()
+        self.prompt7 = QLabel("Interest Rate")
+        self.line7 = QLineEdit()
+        self.prompt8 = QLabel("Deposit Date")
+        self.line8 = QLineEdit()
+        self.prompt9 = QLabel("Minimum Balance")
+        self.line9 = QLineEdit()
+        self.prompt10 = QLabel("Current Number of Withdrawls")
+        self.line10 = QLineEdit()
+        self.prompt11 = QLabel("Maximum Number of Withdrawls")
+        self.line11 = QLineEdit()
+        self.prompt12 = QLabel("Current Date")
+        self.line12 = QLineEdit()
+
+        self.b1 = QPushButton("Cancel")
+        self.b2 = QPushButton("Create")
+        self.b1.clicked.connect(self.on_b1_click)
+        self.b2.clicked.connect(self.on_b2_click)
+
+        self.hbox1.addWidget(self.prompt1)
+        self.hbox1.addWidget(self.line1)
+        self.hbox2.addWidget(self.prompt2)
+        self.hbox2.addWidget(self.line2)
+        self.hbox3.addWidget(self.prompt3)
+        self.hbox3.addWidget(self.line3)
+        self.hbox4.addWidget(self.prompt4)
+        self.hbox4.addWidget(self.line4)
+        self.hbox5.addWidget(self.prompt5)
+        self.hbox5.addWidget(self.line5)
+        self.hbox6.addWidget(self.prompt6)
+        self.hbox6.addWidget(self.line6)
+        self.hbox7.addWidget(self.prompt7)
+        self.hbox7.addWidget(self.line7)
+        self.hbox8.addWidget(self.prompt8)
+        self.hbox8.addWidget(self.line8)
+        self.hbox9.addWidget(self.prompt9)
+        self.hbox9.addWidget(self.line9)
+        self.hbox10.addWidget(self.prompt10)
+        self.hbox10.addWidget(self.line10)
+        self.hbox11.addWidget(self.prompt11)
+        self.hbox11.addWidget(self.line11)
+        self.hbox12.addWidget(self.prompt12)
+        self.hbox12.addWidget(self.line12)
+        self.hbox13.addWidget(self.b1)
+        self.hbox13.addWidget(self.b2)
+
+
+        self.vbox.addLayout(self.hbox1)
+        self.vbox.addLayout(self.hbox2)
+        self.vbox.addLayout(self.hbox3)
+        self.vbox.addLayout(self.hbox4)
+        self.vbox.addLayout(self.hbox5)
+        self.vbox.addLayout(self.hbox6)
+        self.vbox.addLayout(self.hbox7)
+        self.vbox.addLayout(self.hbox8)
+        self.vbox.addLayout(self.hbox9)
+        self.vbox.addLayout(self.hbox10)
+        self.vbox.addLayout(self.hbox11)
+        self.vbox.addLayout(self.hbox12)
+        self.vbox.addLayout(self.hbox13)
+        self.setLayout(self.vbox)
+
+    def on_b1_click(self):
+        self.line1.setText("")
+        self.line2.setText("")
+        self.line4.setText("")
+        self.line5.setText("")
+        self.line6.setText("")
+        self.line7.setText("")
+        self.line8.setText("")
+        self.line9.setText("")
+        self.line10.setText("")
+        self.line11.setText("")
+        self.line12.setText("")
+
+    def on_b2_click(self):
+        mydb = s.connect(
+            host = 'localhost',
+            database = 'bank_management',
+            username = 'root',
+            password = 'barnsley')
+        addaccess = mydb.cursor()
+        try:
+            args = [self.line1.text(),self.line2.text(), self.line3.currentText(), self.line4.text(), self.line5.text(), int(self.line6.text()), int(self.line7.text()), self.line8.text(), int(self.line9.text()), int(self.line10.text()), int(self.line11.text()), self.line12.text()]
+            addaccess.callproc("add_account_access", args)
+            mydb.commit()
+            addaccess.close()
+            mydb.close()
+        except:
+            print("oops")
+
+
+
+
+
+class RemoveAccountAccess (QWidget):
+    def __init__(self):
+        super().__init__()
+        self.setWindowTitle("Remove Account Access")
+        self.vbox = QVBoxLayout()
+        self.hbox1 = QHBoxLayout()
+        self.hbox2 = QHBoxLayout()
+        self.hbox3 = QHBoxLayout()
+        self.hbox4 = QHBoxLayout()
+        self.hbox5 = QHBoxLayout()
+        self.prompt1 = QLabel("Requester ID")
+        self.line1 = QLineEdit()
+        self.prompt2 = QLabel("Sharer ID")
+        self.line2 = QLineEdit()
+        self.prompt3 = QLabel("Bank ID")
+        self.line3 = QLineEdit()
+        self.prompt4 = QLabel("Account ID")
+        self.line4 = QLineEdit()
+
+        self.b1 = QPushButton("Cancel")
+        self.b2 = QPushButton("Create")
+        self.b1.clicked.connect(self.on_b1_click)
+        self.b2.clicked.connect(self.on_b2_click)
+
+        self.hbox1.addWidget(self.prompt1)
+        self.hbox1.addWidget(self.line1)
+        self.hbox2.addWidget(self.prompt2)
+        self.hbox2.addWidget(self.line2)
+        self.hbox3.addWidget(self.prompt3)
+        self.hbox3.addWidget(self.line3)
+        self.hbox4.addWidget(self.prompt4)
+        self.hbox4.addWidget(self.line4)
+        self.hbox5.addWidget(self.b1)
+        self.hbox5.addWidget(self.b2)
+
+
+        self.vbox.addLayout(self.hbox1)
+        self.vbox.addLayout(self.hbox2)
+        self.vbox.addLayout(self.hbox3)
+        self.vbox.addLayout(self.hbox4)
+        self.vbox.addLayout(self.hbox5)
+        self.setLayout(self.vbox)
+
+    def on_b1_click(self):
+        self.line1.setText("")
+        self.line2.setText("")
+        self.line3.setText("")
+        self.line4.setText("")
+
+    def on_b2_click(self):
+        mydb = s.connect(
+            host = 'localhost',
+            database = 'bank_management',
+            username = 'root',
+            password = 'barnsley')
+        removeaccess = mydb.cursor()
+        try:
+            args = [self.line1.text(),self.line2.text(), self.line3.text(), self.line4.text()]
+            removeaccess.callproc("remove_account_access", args)
+            mydb.commit()
+            removeaccess.close()
+            mydb.close()
+        except:
+            print("oops")
+
+
+
+
+
+            
+class CreateFee (QWidget):
+    def __init__(self):
+        super().__init__()
+        self.setWindowTitle("Create Fee")
+        self.vbox = QVBoxLayout()
+        self.hbox1 = QHBoxLayout()
+        self.hbox2 = QHBoxLayout()
+        self.hbox3 = QHBoxLayout()
+        self.hbox4 = QHBoxLayout()
+        self.prompt1 = QLabel("Bank ID")
+        self.line1 = QLineEdit()
+        self.prompt2 = QLabel("Account ID")
+        self.line2 = QLineEdit()
+        self.prompt3 = QLabel("Fee Type")
+        self.line3 = QComboBox()
+        self.line3.addItems(["fee", "low balance", "overdraft", "administrative", "frequency", "withdrawl", "credit union", "other"])
+
+        self.b1 = QPushButton("Cancel")
+        self.b2 = QPushButton("Create")
+        self.b1.clicked.connect(self.on_b1_click)
+        self.b2.clicked.connect(self.on_b2_click)
+
+        self.hbox1.addWidget(self.prompt1)
+        self.hbox1.addWidget(self.line1)
+        self.hbox2.addWidget(self.prompt2)
+        self.hbox2.addWidget(self.line2)
+        self.hbox3.addWidget(self.prompt3)
+        self.hbox3.addWidget(self.line3)
+        self.hbox4.addWidget(self.b1)
+        self.hbox4.addWidget(self.b2)
+
+
+        self.vbox.addLayout(self.hbox1)
+        self.vbox.addLayout(self.hbox2)
+        self.vbox.addLayout(self.hbox3)
+        self.vbox.addLayout(self.hbox4)
+        self.setLayout(self.vbox)
+
+    def on_b1_click(self):
+        self.line1.setText("")
+        self.line2.setText("")
+
+    def on_b2_click(self):
+        mydb = s.connect(
+            host = 'localhost',
+            database = 'bank_management',
+            username = 'root',
+            password = 'barnsley')
+        createfee = mydb.cursor()
+        try:
+            args = [self.line1.text(),self.line2.text(), self.line3.currentText()]
+            createfee.callproc("create_fee", args)
+            mydb.commit()
+            createfee.close()
+            mydb.close()
+        except:
+            print("oops")
+            
 
 if __name__ == '__main__':
     app = QApplication(sys.argv)
