@@ -639,6 +639,132 @@ class StopCustomerRole (QWidget):
         except:
             print("oops")
 
+            
+
+
+
+
+
+class HireWorker (QWidget):
+    def __init__(self):
+        super().__init__()
+        self.setWindowTitle("Hire Worker")
+        self.vbox = QVBoxLayout()
+        self.hbox1 = QHBoxLayout()
+        self.hbox2 = QHBoxLayout()
+        self.hbox3 = QHBoxLayout()
+        self.hbox4 = QHBoxLayout()
+        self.prompt1 = QLabel("Employee ID")
+        self.line1 = QLineEdit()
+        self.prompt2 = QLabel("Bank ID")
+        self.line2 = QLineEdit()
+        self.prompt3 = QLabel("Employee Salary")
+        self.line3 = QLineEdit()
+
+        self.b1 = QPushButton("Cancel")
+        self.b2 = QPushButton("Create")
+        self.b1.clicked.connect(self.on_b1_click)
+        self.b2.clicked.connect(self.on_b2_click)
+
+        self.hbox1.addWidget(self.prompt1)
+        self.hbox1.addWidget(self.line1)
+        self.hbox2.addWidget(self.prompt2)
+        self.hbox2.addWidget(self.line2)
+        self.hbox3.addWidget(self.prompt3)
+        self.hbox3.addWidget(self.line3)
+        self.hbox4.addWidget(self.b1)
+        self.hbox4.addWidget(self.b2)
+
+
+        self.vbox.addLayout(self.hbox1)
+        self.vbox.addLayout(self.hbox2)
+        self.vbox.addLayout(self.hbox3)
+        self.vbox.addLayout(self.hbox4)
+        self.setLayout(self.vbox)
+
+    def on_b1_click(self):
+        self.line1.setText("")
+        self.line2.setText("")
+        self.line3.setText("")
+
+    def on_b2_click(self):
+        mydb = s.connect(
+            host = 'localhost',
+            database = 'bank_management',
+            username = 'root',
+            password = 'barnsley')
+        hirework = mydb.cursor()
+        try:
+            args = [self.line1.text(),self.line2.text(), int(self.line3.text())]
+            hirework.callproc("hire_worker", args)
+            mydb.commit()
+            hirework.close()
+            mydb.close()
+        except:
+            print("oops")
+
+
+
+
+
+class ReplaceManager (QWidget):
+    def __init__(self):
+        super().__init__()
+        self.setWindowTitle("Replace Manager")
+        self.vbox = QVBoxLayout()
+        self.hbox1 = QHBoxLayout()
+        self.hbox2 = QHBoxLayout()
+        self.hbox3 = QHBoxLayout()
+        self.hbox4 = QHBoxLayout()
+        self.prompt1 = QLabel("Manager ID")
+        self.line1 = QLineEdit()
+        self.prompt2 = QLabel("Bank ID")
+        self.line2 = QLineEdit()
+        self.prompt3 = QLabel("Manager Salary")
+        self.line3 = QLineEdit()
+
+        self.b1 = QPushButton("Cancel")
+        self.b2 = QPushButton("Create")
+        self.b1.clicked.connect(self.on_b1_click)
+        self.b2.clicked.connect(self.on_b2_click)
+
+        self.hbox1.addWidget(self.prompt1)
+        self.hbox1.addWidget(self.line1)
+        self.hbox2.addWidget(self.prompt2)
+        self.hbox2.addWidget(self.line2)
+        self.hbox3.addWidget(self.prompt3)
+        self.hbox3.addWidget(self.line3)
+        self.hbox4.addWidget(self.b1)
+        self.hbox4.addWidget(self.b2)
+
+
+        self.vbox.addLayout(self.hbox1)
+        self.vbox.addLayout(self.hbox2)
+        self.vbox.addLayout(self.hbox3)
+        self.vbox.addLayout(self.hbox4)
+        self.setLayout(self.vbox)
+
+    def on_b1_click(self):
+        self.line1.setText("")
+        self.line2.setText("")
+        self.line3.setText("")
+
+    def on_b2_click(self):
+        mydb = s.connect(
+            host = 'localhost',
+            database = 'bank_management',
+            username = 'root',
+            password = 'barnsley')
+        replacemanager = mydb.cursor()
+        try:
+            args = [self.line1.text(),self.line2.text(), int(self.line3.text())]
+            replacemanager.callproc("replace_manager", args)
+            mydb.commit()
+            replacemanager.close()
+            mydb.close()
+        except:
+            print("oops")
+
 
 if __name__ == '__main__':
     app = QApplication(sys.argv)
