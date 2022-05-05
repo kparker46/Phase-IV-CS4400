@@ -367,6 +367,7 @@ class CreateCorporation (QWidget):
             mydb.commit()
             createcorp.close()
             mydb.close()
+            self.setWindowTitle("Success!")
         except:
             self.setWindowTitle("Invalid Inputs/Blank Inputs")
     def on_b3_click(self):
@@ -480,6 +481,7 @@ class CreateBank (QWidget):
             mydb.commit()
             createbank.close()
             mydb.close()
+            self.setWindowTitle("Success!")
         except:
             self.setWindowTitle("Error Occurred!")
 
@@ -677,6 +679,7 @@ class StartEmployeeRole (QWidget):
             mydb.commit()
             startemprole.close()
             mydb.close()
+            self.setWindowTitle("Success")
         except:
             self.setWindowTitle("Error Occurred!")
 
@@ -795,6 +798,7 @@ class StartCustomerRole (QWidget):
             mydb.commit()
             startcustrole.close()
             mydb.close()
+            self.setWindowTitle("Success!")
         except:
             self.setWindowTitle("Error Occurred!")
 
@@ -850,6 +854,7 @@ class StopEmployeeRole (QWidget):
             mydb.commit()
             stopemprole.close()
             mydb.close()
+            self.setWindowTitle("Success!")
         except:
             self.setWindowTitle("Error Occurred!")
 
@@ -907,6 +912,7 @@ class StopCustomerRole (QWidget):
             mydb.commit()
             stopcustrole.close()
             mydb.close()
+            self.setWindowTitle("Success!")
         except:
             self.setWindowTitle("Error Occurred!")
 
@@ -977,6 +983,7 @@ class HireWorkerA (QWidget):
             mydb.commit()
             hirework.close()
             mydb.close()
+            self.setWindowTitle("Success!")
         except:
             self.setWindowTitle("Error Occurred!")
 
@@ -1043,6 +1050,7 @@ class HireWorkerM (QWidget):
             mydb.commit()
             hirework.close()
             mydb.close()
+            self.setWindowTitle("Success!")
         except:
             self.setWindowTitle("Error Occurred!")
 
@@ -1109,6 +1117,7 @@ class ReplaceManager (QWidget):
             mydb.commit()
             replacemanager.close()
             mydb.close()
+            self.setWindowTitle("Success!")
         except:
             self.setWindowTitle("Error Occurred!")
 
@@ -1286,6 +1295,7 @@ class AddAccountAccessA (QWidget):
             mydb.commit()
             addaccess.close()
             mydb.close()
+            self.setWindowTitle("Success!")
         except:
             self.setWindowTitle("Error Occurred!")
 
@@ -1363,6 +1373,7 @@ class RemoveAccountAccessA (QWidget):
             mydb.commit()
             removeaccess.close()
             mydb.close()
+            self.setWindowTitle("Success!")
         except:
             self.setWindowTitle("Error Occurred!")
 
@@ -1535,6 +1546,7 @@ class AddAccountAccessC (QWidget):
             mydb.commit()
             addaccess.close()
             mydb.close()
+            self.setWindowTitle("Success!")
         except:
             self.setWindowTitle("Error Occurred!")
 
@@ -1612,6 +1624,7 @@ class RemoveAccountAccessC (QWidget):
             mydb.commit()
             removeaccess.close()
             mydb.close()
+            self.setWindowTitle("Success!")
         except:
             self.setWindowTitle("Error Occurred!")
 
@@ -1684,6 +1697,7 @@ class CreateFee (QWidget):
             mydb.commit()
             createfee.close()
             mydb.close()
+            self.setWindowTitle("Success!")
         except:
             self.setWindowTitle("Error Occurred!")
 
@@ -1816,6 +1830,7 @@ class StartOverdraftA (QWidget):
             mydb.commit()
             startoverdraft.close()
             mydb.close()
+            self.setWindowTitle("Success!")
         except:
             self.setWindowTitle("Error Occurred!")
 
@@ -1884,6 +1899,7 @@ class StopOverdraftA (QWidget):
             mydb.commit()
             stopoverdraft.close()
             mydb.close()
+            self.setWindowTitle("Success!")
         except:
             self.setWindowTitle("Error Occurred!")
 
@@ -2010,6 +2026,7 @@ class StartOverdraftC (QWidget):
             mydb.commit()
             startoverdraft.close()
             mydb.close()
+            self.setWindowTitle("Success!")
         except:
             self.setWindowTitle("Error Occurred!")
 
@@ -2078,6 +2095,7 @@ class StopOverdraftC (QWidget):
             mydb.commit()
             stopoverdraft.close()
             mydb.close()
+            self.setWindowTitle("Success!")
         except:
             self.setWindowTitle("Error Occurred!")
 
@@ -2199,6 +2217,7 @@ class AccountDeposit (QWidget):
             mydb.commit()
             deposit.close()
             mydb.close()
+            self.setWindowTitle("Success!")
         except:
             self.setWindowTitle("Error Occurred!")
 
@@ -2283,6 +2302,7 @@ class AccountWithdrawal (QWidget):
             mydb.commit()
             withdrawal.close()
             mydb.close()
+            self.setWindowTitle("Success!")
         except:
             self.setWindowTitle("Error Occurred!")
 
@@ -2381,6 +2401,7 @@ class AccountTransfer (QWidget):
             mydb.commit()
             transfer.close()
             mydb.close()
+            self.setWindowTitle("Success!")
         except:
             self.setWindowTitle("Error Occurred!")
 
