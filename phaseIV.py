@@ -1,7 +1,7 @@
 import sys
 import mysql.connector as s
 from PyQt5.QtWidgets import (QApplication, QWidget, QPushButton, QVBoxLayout, QLineEdit,
-    QHBoxLayout, QLabel, QTableWidget, QTableWidgetItem, QHeaderView)
+    QHBoxLayout, QLabel, QComboBox, QTableWidget, QTableWidgetItem, QHeaderView)
 
 
 
@@ -52,9 +52,26 @@ class Login (QWidget):
 
         cursor.execute("select * from system_admin natural join person")
 
-        data = cursor.fetchall()
-        if (self.line1.text(), self.line2.text()) in data:
+        admindata = cursor.fetchall()
+
+        cursor.execute("select * from customer natural join person")
+
+        customerdata = cursor.fetchall()
+
+        cursor.execute("select manager, pwd from bank join person on perID = manager")
+
+        managerdata = cursor.fetchall()
+        if (self.line1.text(), self.line2.text()) in admindata:
             self.w = AdminHome()
+            self.w.show()
+            self.close()
+        elif (self.line1.text(), self.line2.text()) in customerdata:
+            self.w = CustomerHome()
+            self.w.show()
+            self.close()
+
+        elif (self.line1.text(), self.line2.text()) in managerdata:
+            self.w = ManagerHome()
             self.w.show()
             self.close()
         else:
@@ -75,16 +92,24 @@ class AdminHome (QWidget):
         self.vbox2 = QVBoxLayout()
 
         self.b1 = QPushButton("View Stats")
+        self.b1.clicked.connect(self.on_b1_click)
         self.b2 = QPushButton("Create Corporation")
         self.b2.clicked.connect(self.on_b2_click)
         self.b3 = QPushButton("Create Fee")
+        self.b3.clicked.connect(self.on_b3_click)
         self.b4 = QPushButton("Manage Users")
+        self.b4.clicked.connect(self.on_b4_click)
         self.b5 = QPushButton("Manage Overdraft")
+        self.b5.clicked.connect(self.on_b5_click)
         self.b6 = QPushButton("Hire Worker")
+        self.b6.clicked.connect(self.on_b6_click)
         self.b7 = QPushButton("Pay Employees")
         self.b8 = QPushButton("Replace Manager")
+        self.b8.clicked.connect(self.on_b8_click)
         self.b9 = QPushButton("Manage Accounts")
+        self.b9.clicked.connect(self.on_b9_click)
         self.b10 = QPushButton("Create Bank")
+        self.b10.clicked.connect(self.on_b10_click)
 
         self.vbox1.addWidget(self.b1)
         self.vbox1.addWidget(self.b2)
@@ -102,15 +127,123 @@ class AdminHome (QWidget):
 
         self.setLayout(self.hbox)
 
+    def on_b1_click(self):
+        self.w = ViewStats()
+        self.w.show()
+        self.close()
+
     def on_b2_click(self):
         self.w = CreateCorporation()
         self.w.show()
         self.close()
 
+    def on_b3_click(self):
+        self.w = CreateFee()
+        self.w.show()
+        self.close()
+
+    def on_b4_click(self):
+        self.w = ManageUserPage()
+        self.w.show()
+        self.close()
+
+    def on_b5_click(self):
+        self.w = ManageOverdraft()
+        self.w.show()
+        self.close()
+
+    def on_b6_click(self):
+        self.w = HireWorker()
+        self.w.show()
+        self.close()
+
+    def on_b8_click(self):
+        self.w = ReplaceManager()
+        self.w.show()
+        self.close()
+
+    def on_b9_click(self):
+        self.w = ManageAccounts()
+        self.w.show()
+        self.close()
+
+    def on_b10_click(self):
+        self.w = CreateBank()
+        self.w.show()
+        self.close()
+
+
+class ManagerHome (QWidget):
+    def __init__(self):
+        super().__init__()
+
+        self.setWindowTitle("Manager Menu")
+
+        self.vbox = QVBoxLayout()
+
+        self.b1 = QPushButton("Pay Employee")
+        self.b1.clicked.connect(self.on_b1_click)
+        self.b2 = QPushButton("Hire Worker")
+        self.b2.clicked.connect(self.on_b2_click)
+
+        self.vbox.addWidget(self.b1)
+        self.vbox.addWidget(self.b2)
+
+        self.setLayout(self.vbox)
+
+    def on_b1_click(self):
+        pass
+
+
+    def on_b2_click(self):
+        pass
 
 
 
 
+
+class CustomerHome (QWidget):
+    def __init__(self):
+        super().__init__()
+
+
+        self.setWindowTitle("Customer Menu")
+
+        self.vbox = QVBoxLayout()
+        self.b1 = QPushButton("Manage Accounts")
+        self.b1.clicked.connect(self.on_b1_click)
+        self.b2 = QPushButton("Depost/Withdrawal")
+        self.b2.clicked.connect(self.on_b2_click)
+        self.b3 = QPushButton("Manage Overdraft")
+        self.b3.clicked.connect(self.on_b3_click)
+        self.b4 = QPushButton("Make Transfer")
+        self.b4.clicked.connect(self.on_b4_click)
+
+
+
+        self.vbox.addWidget(self.b1)
+        self.vbox.addWidget(self.b2)
+        self.vbox.addWidget(self.b3)
+        self.vbox.addWidget(self.b4)
+
+        self.setLayout(self.vbox)
+
+    def on_b1_click(self):
+        return None
+
+    def on_b2_click(self):
+        self.w = DepoWith()
+        self.w.show()
+        self.close()
+
+
+    def on_b3_click(self):
+        return None
+
+    def on_b4_click(self):
+        self.w = AccountTransfer()
+        self.w.show()
+        self.close()
 
 
 
@@ -195,6 +328,12 @@ class CreateCorporation (QWidget):
         self.w.show()
         self.close()
 
+
+
+
+
+
+
 class CreateBank (QWidget):
     def __init__(self):
         super().__init__()
@@ -233,6 +372,8 @@ class CreateBank (QWidget):
         self.b2 = QPushButton("Create")
         self.b1.clicked.connect(self.on_b1_click)
         self.b2.clicked.connect(self.on_b2_click)
+        self.b3 = QPushButton("Return to Home")
+        self.b3.clicked.connect(self.on_b3_click)
 
         self.hbox1.addWidget(self.prompt1)
         self.hbox1.addWidget(self.line1)
@@ -266,6 +407,7 @@ class CreateBank (QWidget):
         self.vbox.addLayout(self.hbox8)
         self.vbox.addLayout(self.hbox9)
         self.vbox.addLayout(self.hbox10)
+        self.vbox.addWidget(self.b3)
         self.setLayout(self.vbox)
 
     def on_b1_click(self):
@@ -294,12 +436,73 @@ class CreateBank (QWidget):
             mydb.close()
         except:
             print("oops")
-            
-            
-            
-            
-            
-            
+
+
+    def on_b3_click(self):
+        self.w = AdminHome()
+        self.w.show()
+        self.close()
+
+
+
+
+class ManageUserPage (QWidget):
+    def __init__(self):
+        super().__init__()
+        self.setWindowTitle("Manage Users")
+
+        self.vbox = QVBoxLayout()
+
+        self.b1 = QPushButton("Create Employee Role")
+        self.b2 = QPushButton("Create Customer Role")
+        self.b3 = QPushButton("Stop Employee Role")
+        self.b4 = QPushButton("Stop Customer Role")
+        self.b5 = QPushButton("Return to Home")
+
+        self.b1.clicked.connect(self.on_b1_click)
+        self.b2.clicked.connect(self.on_b2_click)
+        self.b3.clicked.connect(self.on_b3_click)
+        self.b4.clicked.connect(self.on_b4_click)
+        self.b5.clicked.connect(self.on_b5_click)
+
+        self.vbox.addWidget(self.b1)
+        self.vbox.addWidget(self.b2)
+        self.vbox.addWidget(self.b3)
+        self.vbox.addWidget(self.b4)
+        self.vbox.addWidget(self.b5)
+
+        self.setLayout(self.vbox)
+    def on_b1_click(self):
+        self.w = StartEmployeeRole()
+        self.w.show()
+        self.close()
+
+    def on_b2_click(self):
+        self.w = StartCustomerRole()
+        self.w.show()
+        self.close()
+
+    def on_b3_click(self):
+        self.w = StopEmployeeRole()
+        self.w.show()
+        self.close()
+
+    def on_b4_click(self):
+        self.w = StopCustomerRole()
+        self.w.show()
+        self.close()
+
+    def on_b5_click(self):
+        self.w = AdminHome()
+        self.w.show()
+        self.close()
+
+
+
+
+
+
+
 class StartEmployeeRole (QWidget):
     def __init__(self):
         super().__init__()
@@ -350,6 +553,8 @@ class StartEmployeeRole (QWidget):
         self.b2 = QPushButton("Create")
         self.b1.clicked.connect(self.on_b1_click)
         self.b2.clicked.connect(self.on_b2_click)
+        self.b3 = QPushButton("Return to Manage Users")
+        self.b3.clicked.connect(self.on_b3_click)
 
         self.hbox1.addWidget(self.prompt1)
         self.hbox1.addWidget(self.line1)
@@ -395,6 +600,7 @@ class StartEmployeeRole (QWidget):
         self.vbox.addLayout(self.hbox12)
         self.vbox.addLayout(self.hbox13)
         self.vbox.addLayout(self.hbox14)
+        self.vbox.addWidget(self.b3)
         self.setLayout(self.vbox)
 
     def on_b1_click(self):
@@ -428,7 +634,10 @@ class StartEmployeeRole (QWidget):
         except:
             print("oops")
 
-
+    def on_b3_click(self):
+        self.w = ManageUserPage()
+        self.w.show()
+        self.close()
 
 
 
@@ -474,6 +683,8 @@ class StartCustomerRole (QWidget):
         self.b2 = QPushButton("Create")
         self.b1.clicked.connect(self.on_b1_click)
         self.b2.clicked.connect(self.on_b2_click)
+        self.b3 = QPushButton("Return to Manage Users")
+        self.b3.clicked.connect(self.on_b3_click)
 
         self.hbox1.addWidget(self.prompt1)
         self.hbox1.addWidget(self.line1)
@@ -510,6 +721,7 @@ class StartCustomerRole (QWidget):
         self.vbox.addLayout(self.hbox9)
         self.vbox.addLayout(self.hbox10)
         self.vbox.addLayout(self.hbox11)
+        self.vbox.addWidget(self.b3)
         self.setLayout(self.vbox)
 
     def on_b1_click(self):
@@ -540,7 +752,10 @@ class StartCustomerRole (QWidget):
         except:
             print("oops")
 
-
+    def on_b3_click(self):
+        self.w = ManageUserPage()
+        self.w.show()
+        self.close()
 
 
 
@@ -559,6 +774,8 @@ class StopEmployeeRole (QWidget):
         self.b2 = QPushButton("Create")
         self.b1.clicked.connect(self.on_b1_click)
         self.b2.clicked.connect(self.on_b2_click)
+        self.b3 = QPushButton("Return to Manage Users")
+        self.b3.clicked.connect(self.on_b3_click)
 
         self.hbox1.addWidget(self.prompt1)
         self.hbox1.addWidget(self.line1)
@@ -568,6 +785,7 @@ class StopEmployeeRole (QWidget):
 
         self.vbox.addLayout(self.hbox1)
         self.vbox.addLayout(self.hbox2)
+        self.vbox.addWidget(self.b3)
         self.setLayout(self.vbox)
 
     def on_b1_click(self):
@@ -589,6 +807,10 @@ class StopEmployeeRole (QWidget):
         except:
             print("oops")
 
+    def on_b3_click(self):
+        self.w = ManageUserPage()
+        self.w.show()
+        self.close()
 
 
 
@@ -609,6 +831,8 @@ class StopCustomerRole (QWidget):
         self.b2 = QPushButton("Create")
         self.b1.clicked.connect(self.on_b1_click)
         self.b2.clicked.connect(self.on_b2_click)
+        self.b3 = QPushButton("Return to Manage Users")
+        self.b3.clicked.connect(self.on_b3_click)
 
         self.hbox1.addWidget(self.prompt1)
         self.hbox1.addWidget(self.line1)
@@ -618,6 +842,7 @@ class StopCustomerRole (QWidget):
 
         self.vbox.addLayout(self.hbox1)
         self.vbox.addLayout(self.hbox2)
+        self.vbox.addWidget(self.b3)
         self.setLayout(self.vbox)
 
     def on_b1_click(self):
@@ -639,8 +864,11 @@ class StopCustomerRole (QWidget):
         except:
             print("oops")
 
-            
 
+    def on_b3_click(self):
+        self.w = ManageUserPage()
+        self.w.show()
+        self.close()
 
 
 
@@ -665,6 +893,8 @@ class HireWorker (QWidget):
         self.b2 = QPushButton("Create")
         self.b1.clicked.connect(self.on_b1_click)
         self.b2.clicked.connect(self.on_b2_click)
+        self.b3 = QPushButton("Return to Home")
+        self.b3.clicked.connect(self.on_b3_click)
 
         self.hbox1.addWidget(self.prompt1)
         self.hbox1.addWidget(self.line1)
@@ -680,6 +910,7 @@ class HireWorker (QWidget):
         self.vbox.addLayout(self.hbox2)
         self.vbox.addLayout(self.hbox3)
         self.vbox.addLayout(self.hbox4)
+        self.vbox.addWidget(self.b3)
         self.setLayout(self.vbox)
 
     def on_b1_click(self):
@@ -703,7 +934,10 @@ class HireWorker (QWidget):
         except:
             print("oops")
 
-
+    def on_b3_click(self):
+        self.w = AdminHome()
+        self.w.show()
+        self.close()
 
 
 
@@ -727,6 +961,8 @@ class ReplaceManager (QWidget):
         self.b2 = QPushButton("Create")
         self.b1.clicked.connect(self.on_b1_click)
         self.b2.clicked.connect(self.on_b2_click)
+        self.b3 = QPushButton("Return to Home")
+        self.b3.clicked.connect(self.on_b3_click)
 
         self.hbox1.addWidget(self.prompt1)
         self.hbox1.addWidget(self.line1)
@@ -742,6 +978,7 @@ class ReplaceManager (QWidget):
         self.vbox.addLayout(self.hbox2)
         self.vbox.addLayout(self.hbox3)
         self.vbox.addLayout(self.hbox4)
+        self.vbox.addWidget(self.b3)
         self.setLayout(self.vbox)
 
     def on_b1_click(self):
@@ -765,9 +1002,59 @@ class ReplaceManager (QWidget):
         except:
             print("oops")
 
-            
-            
-            
+
+
+    def on_b3_click(self):
+        self.w = AdminHome()
+        self.w.show()
+        self.close()
+
+
+
+
+
+class ManageAccounts (QWidget):
+    def __init__(self):
+        super().__init__()
+
+        self.setWindowTitle("Manage Accounts")
+
+        self.vbox = QVBoxLayout()
+        self.b1 = QPushButton("Add Account Access")
+        self.b2 = QPushButton("Remove Account Access")
+        self.b3 = QPushButton("Return to Home")
+
+        self.b1.clicked.connect(self.on_b1_click)
+        self.b2.clicked.connect(self.on_b2_click)
+        self.b3.clicked.connect(self.on_b3_click)
+
+        self.vbox.addWidget(self.b1)
+        self.vbox.addWidget(self.b2)
+        self.vbox.addWidget(self.b3)
+
+        self.setLayout(self.vbox)
+
+
+    def on_b1_click(self):
+        self.w = AddAccountAccess()
+        self.w.show()
+        self.close()
+
+    def on_b2_click(self):
+        self.w = RemoveAccountAccess()
+        self.w.show()
+        self.close()
+
+    def on_b3_click(self):
+        self.w = AdminHome()
+        self.w.show()
+        self.close()
+
+
+
+
+
+
 class AddAccountAccess (QWidget):
     def __init__(self):
         super().__init__()
@@ -816,6 +1103,8 @@ class AddAccountAccess (QWidget):
         self.b2 = QPushButton("Create")
         self.b1.clicked.connect(self.on_b1_click)
         self.b2.clicked.connect(self.on_b2_click)
+        self.b3 = QPushButton("Return to Manage Accounts")
+        self.b3.clicked.connect(self.on_b3_click)
 
         self.hbox1.addWidget(self.prompt1)
         self.hbox1.addWidget(self.line1)
@@ -858,6 +1147,7 @@ class AddAccountAccess (QWidget):
         self.vbox.addLayout(self.hbox11)
         self.vbox.addLayout(self.hbox12)
         self.vbox.addLayout(self.hbox13)
+        self.vbox.addWidget(self.b3)
         self.setLayout(self.vbox)
 
     def on_b1_click(self):
@@ -889,6 +1179,11 @@ class AddAccountAccess (QWidget):
         except:
             print("oops")
 
+    def on_b3_click(self):
+        self.w = ManageAccounts()
+        self.w.show()
+        self.close()
+
 
 
 
@@ -916,6 +1211,8 @@ class RemoveAccountAccess (QWidget):
         self.b2 = QPushButton("Create")
         self.b1.clicked.connect(self.on_b1_click)
         self.b2.clicked.connect(self.on_b2_click)
+        self.b3 = QPushButton("Return to Manage Accounts")
+        self.b3.clicked.connect(self.on_b3_click)
 
         self.hbox1.addWidget(self.prompt1)
         self.hbox1.addWidget(self.line1)
@@ -934,6 +1231,7 @@ class RemoveAccountAccess (QWidget):
         self.vbox.addLayout(self.hbox3)
         self.vbox.addLayout(self.hbox4)
         self.vbox.addLayout(self.hbox5)
+        self.vbox.addWidget(self.b3)
         self.setLayout(self.vbox)
 
     def on_b1_click(self):
@@ -959,10 +1257,13 @@ class RemoveAccountAccess (QWidget):
             print("oops")
 
 
+    def on_b3_click(self):
+        self.w = ManageAccounts()
+        self.w.show()
+        self.close()
 
 
 
-            
 class CreateFee (QWidget):
     def __init__(self):
         super().__init__()
@@ -984,6 +1285,8 @@ class CreateFee (QWidget):
         self.b2 = QPushButton("Create")
         self.b1.clicked.connect(self.on_b1_click)
         self.b2.clicked.connect(self.on_b2_click)
+        self.b3 = QPushButton("Return to Home")
+        self.b3.clicked.connect(self.on_b3_click)
 
         self.hbox1.addWidget(self.prompt1)
         self.hbox1.addWidget(self.line1)
@@ -999,6 +1302,7 @@ class CreateFee (QWidget):
         self.vbox.addLayout(self.hbox2)
         self.vbox.addLayout(self.hbox3)
         self.vbox.addLayout(self.hbox4)
+        self.vbox.addWidget(self.b3)
         self.setLayout(self.vbox)
 
     def on_b1_click(self):
@@ -1020,10 +1324,64 @@ class CreateFee (QWidget):
             mydb.close()
         except:
             print("oops")
-            
-            
-            
-            
+
+
+    def on_b3_click(self):
+        self.w = AdminHome()
+        self.w.show()
+        self.close()
+
+
+
+
+
+
+
+class ManageOverdraft (QWidget):
+    def __init__(self):
+        super().__init__()
+
+        self.setWindowTitle("Manage Overdraft")
+
+        self.vbox = QVBoxLayout()
+
+        self.b1 = QPushButton("Start Overdraft")
+        self.b2 = QPushButton("Stop Overdraft")
+        self.b3 = QPushButton("Return to Home")
+
+        self.b1.clicked.connect(self.on_b1_click)
+        self.b2.clicked.connect(self.on_b2_click)
+        self.b3.clicked.connect(self.on_b3_click)
+
+        self.vbox.addWidget(self.b1)
+        self.vbox.addWidget(self.b2)
+        self.vbox.addWidget(self.b3)
+
+        self.setLayout(self.vbox)
+
+    def on_b1_click(self):
+        self.w = StartOverdraft()
+        self.w.show()
+        self.close()
+
+    def on_b2_click(self):
+        self.w = StopOverdraft()
+        self.w.show()
+        self.close()
+
+    def on_b3_click(self):
+        self.w = AdminHome()
+        self.w.show()
+        self.close()
+
+
+
+
+
+
+
+
+
 class StartOverdraft (QWidget):
     def __init__(self):
         super().__init__()
@@ -1050,6 +1408,8 @@ class StartOverdraft (QWidget):
         self.b2 = QPushButton("Create")
         self.b1.clicked.connect(self.on_b1_click)
         self.b2.clicked.connect(self.on_b2_click)
+        self.b3 = QPushButton("Return to Manage Overdraft")
+        self.b3.clicked.connect(self.on_b3_click)
 
         self.hbox1.addWidget(self.prompt1)
         self.hbox1.addWidget(self.line1)
@@ -1071,6 +1431,7 @@ class StartOverdraft (QWidget):
         self.vbox.addLayout(self.hbox4)
         self.vbox.addLayout(self.hbox5)
         self.vbox.addLayout(self.hbox6)
+        self.vbox.addWidget(self.b3)
         self.setLayout(self.vbox)
 
     def on_b1_click(self):
@@ -1096,7 +1457,10 @@ class StartOverdraft (QWidget):
         except:
             print("oops")
 
-
+    def on_b3_click(self):
+        self.w = ManageOverdraft()
+        self.w.show()
+        self.close()
 
 
 
@@ -1120,6 +1484,8 @@ class StopOverdraft (QWidget):
         self.b2 = QPushButton("Create")
         self.b1.clicked.connect(self.on_b1_click)
         self.b2.clicked.connect(self.on_b2_click)
+        self.b3 = QPushButton("Return to Manage Overdraft")
+        self.b3.clicked.connect(self.on_b3_click)
 
         self.hbox1.addWidget(self.prompt1)
         self.hbox1.addWidget(self.line1)
@@ -1135,6 +1501,7 @@ class StopOverdraft (QWidget):
         self.vbox.addLayout(self.hbox2)
         self.vbox.addLayout(self.hbox3)
         self.vbox.addLayout(self.hbox4)
+        self.vbox.addWidget(self.b3)
         self.setLayout(self.vbox)
 
     def on_b1_click(self):
@@ -1157,6 +1524,50 @@ class StopOverdraft (QWidget):
             mydb.close()
         except:
             print("oops")
+
+    def on_b3_click(self):
+        self.w = ManageOverdraft()
+        self.w.show()
+        self.close()
+
+
+
+
+class DepoWith (QWidget):
+    def __init__(self):
+        super().__init__()
+
+        self.setWindowTitle("Deposit or Withdraw?")
+
+        self.vbox = QVBoxLayout()
+        self.b1 = QPushButton("Deposit")
+        self.b2 = QPushButton("Withdraw")
+        self.b3 = QPushButton("Return to Home")
+
+        self.b1.clicked.connect(self.on_b1_click)
+        self.b2.clicked.connect(self.on_b2_click)
+        self.b3.clicked.connect(self.on_b3_click)
+
+        self.vbox.addWidget(self.b1)
+        self.vbox.addWidget(self.b2)
+        self.vbox.addWidget(self.b3)
+
+        self.setLayout(self.vbox)
+
+    def on_b1_click(self):
+        self.w = AccountDeposit()
+        self.w.show()
+        self.close()
+
+    def on_b2_click(self):
+        self.w = AccountWithdrawal()
+        self.w.show()
+        self.close()
+
+    def on_b3_click(self):
+        self.w = CustomerHome()
+        self.w.show()
+        self.close()
 
 
 
@@ -1188,6 +1599,8 @@ class AccountDeposit (QWidget):
         self.b2 = QPushButton("Create")
         self.b1.clicked.connect(self.on_b1_click)
         self.b2.clicked.connect(self.on_b2_click)
+        self.b3 = QPushButton("Return to selection")
+        self.b3.clicked.connect(self.on_b3_click)
 
         self.hbox1.addWidget(self.prompt1)
         self.hbox1.addWidget(self.line1)
@@ -1209,6 +1622,7 @@ class AccountDeposit (QWidget):
         self.vbox.addLayout(self.hbox4)
         self.vbox.addLayout(self.hbox5)
         self.vbox.addLayout(self.hbox6)
+        self.vbox.addWidget(self.b3)
         self.setLayout(self.vbox)
 
     def on_b1_click(self):
@@ -1233,6 +1647,11 @@ class AccountDeposit (QWidget):
             mydb.close()
         except:
             print("oops")
+
+    def on_b3_click(self):
+        self.w = DepoWith()
+        self.w.show()
+        self.close()
 
 
 
@@ -1264,6 +1683,8 @@ class AccountWithdrawal (QWidget):
         self.b2 = QPushButton("Create")
         self.b1.clicked.connect(self.on_b1_click)
         self.b2.clicked.connect(self.on_b2_click)
+        self.b3 = QPushButton("Return to selection")
+        self.b3.clicked.connect(self.on_b3_click)
 
         self.hbox1.addWidget(self.prompt1)
         self.hbox1.addWidget(self.line1)
@@ -1285,6 +1706,7 @@ class AccountWithdrawal (QWidget):
         self.vbox.addLayout(self.hbox4)
         self.vbox.addLayout(self.hbox5)
         self.vbox.addLayout(self.hbox6)
+        self.vbox.addWidget(self.b3)
         self.setLayout(self.vbox)
 
     def on_b1_click(self):
@@ -1309,6 +1731,11 @@ class AccountWithdrawal (QWidget):
             mydb.close()
         except:
             print("oops")
+
+    def on_b3_click(self):
+        self.w = DepoWith()
+        self.w.show()
+        self.close()
 
 
 
@@ -1346,6 +1773,8 @@ class AccountTransfer (QWidget):
         self.b2 = QPushButton("Create")
         self.b1.clicked.connect(self.on_b1_click)
         self.b2.clicked.connect(self.on_b2_click)
+        self.b3 = QPushButton("Return to Home")
+        self.b3.clicked.connect(self.on_b3_click)
 
         self.hbox1.addWidget(self.prompt1)
         self.hbox1.addWidget(self.line1)
@@ -1373,6 +1802,7 @@ class AccountTransfer (QWidget):
         self.vbox.addLayout(self.hbox6)
         self.vbox.addLayout(self.hbox7)
         self.vbox.addLayout(self.hbox8)
+        self.vbox.addWidget(self.b3)
         self.setLayout(self.vbox)
 
     def on_b1_click(self):
@@ -1399,8 +1829,16 @@ class AccountTransfer (QWidget):
             mydb.close()
         except:
             print("oops")
-            
- class ViewStats (QWidget):
+
+    def on_b3_click(self):
+        self.w = CustomerHome()
+        self.w.show()
+        self.close()
+
+
+
+
+class ViewStats (QWidget):
     def __init__(self):
         super().__init__()
 
@@ -1460,9 +1898,9 @@ class AccountTransfer (QWidget):
         self.adHome.show()
         self.close()
 
-        
-        
- class DisplayAccountStats (QWidget):
+
+
+class DisplayAccountStats (QWidget):
     def __init__(self):
         super().__init__()
 
@@ -1471,7 +1909,7 @@ class AccountTransfer (QWidget):
         self.table = QTableWidget()
         self.b1 = QPushButton("Return To View Stats")
         self.b1.clicked.connect(self.on_b1_click)
-         
+
         self.table.setColumnCount(4)
         self.table.setHorizontalHeaderLabels(["Bank", "Account ID", "Account Balance ($)", "Number of\nOwners"])
         mydb = s.connect(
@@ -1495,7 +1933,7 @@ class AccountTransfer (QWidget):
         cur.close()
         mydb.close()
 
-        header = self.table.horizontalHeader()       
+        header = self.table.horizontalHeader()
         header.setSectionResizeMode(0, QHeaderView.ResizeToContents)
         header.setSectionResizeMode(1, QHeaderView.ResizeToContents)
         header.setSectionResizeMode(2, QHeaderView.ResizeToContents)
@@ -1511,8 +1949,8 @@ class AccountTransfer (QWidget):
         self.stats = ViewStats()
         self.stats.show()
         self.close()
-        
-        
+
+
 class DisplayCorporationStats (QWidget):
     def __init__(self):
         super().__init__()
@@ -1522,7 +1960,7 @@ class DisplayCorporationStats (QWidget):
         self.table = QTableWidget()
         self.b1 = QPushButton("Return To View Stats")
         self.b1.clicked.connect(self.on_b1_click)
-         
+
         self.table.setColumnCount(6)
         self.table.setHorizontalHeaderLabels(["Corporation ID", "Short Name", "Formal Name", "Number of\nBanks", "Corporation\nAssets ($)", "Total Assets ($)"])
         mydb = s.connect(
@@ -1548,7 +1986,7 @@ class DisplayCorporationStats (QWidget):
         cur.close()
         mydb.close()
 
-        header = self.table.horizontalHeader()       
+        header = self.table.horizontalHeader()
         header.setSectionResizeMode(0, QHeaderView.ResizeToContents)
         header.setSectionResizeMode(1, QHeaderView.ResizeToContents)
         header.setSectionResizeMode(2, QHeaderView.ResizeToContents)
@@ -1565,9 +2003,9 @@ class DisplayCorporationStats (QWidget):
 
         self.stats = ViewStats()
         self.stats.show()
-        self.close()  
-       
- 
+        self.close()
+
+
 class DisplayBankStats (QWidget):
     def __init__(self):
         super().__init__()
@@ -1577,7 +2015,7 @@ class DisplayBankStats (QWidget):
         self.table = QTableWidget()
         self.b1 = QPushButton("Return To View Stats")
         self.b1.clicked.connect(self.on_b1_click)
-         
+
         self.table.setColumnCount(10)
         self.table.setHorizontalHeaderLabels(["Bank ID", "Corporation Name", "Bank Name", "Street", "State", "Zip", "Number\nof\nAccounts", "Bank Assets ($)", "Total Assets ($)"])
         mydb = s.connect(
@@ -1607,7 +2045,7 @@ class DisplayBankStats (QWidget):
         cur.close()
         mydb.close()
 
-        header = self.table.horizontalHeader()       
+        header = self.table.horizontalHeader()
         header.setSectionResizeMode(0, QHeaderView.ResizeToContents)
         header.setSectionResizeMode(1, QHeaderView.ResizeToContents)
         header.setSectionResizeMode(2, QHeaderView.ResizeToContents)
@@ -1629,8 +2067,8 @@ class DisplayBankStats (QWidget):
         self.stats = ViewStats()
         self.stats.show()
         self.close()
-        
-        
+
+
 class DisplayCustomerStats (QWidget):
     def __init__(self):
         super().__init__()
@@ -1762,10 +2200,13 @@ class DisplayEmployeeStats (QWidget):
         self.stats = ViewStats()
         self.stats.show()
         self.close()
-            
+
 
 if __name__ == '__main__':
     app = QApplication(sys.argv)
     main = Login()
     main.show()
     sys.exit(app.exec_())
+
+
+
