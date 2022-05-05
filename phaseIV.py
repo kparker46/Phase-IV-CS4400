@@ -564,9 +564,18 @@ class StartEmployeeRole (QWidget):
         self.setWindowTitle("Start Employee Role")
         self.vbox = QVBoxLayout()
         self.hbox1 = QHBoxLayout()
-        self.hbox2 = QHBoxLayout()
+        self.hbox10 = QHBoxLayout()
+        self.hbox11 = QHBoxLayout()
+        self.hbox12 = QHBoxLayout()
+        self.hbox14 = QHBoxLayout()
         self.prompt1 = QLabel("Employee ID")
         self.line1 = QLineEdit()
+        self.prompt10 = QLabel("Salary")
+        self.line10 = QLineEdit()
+        self.prompt11 = QLabel("Payments")
+        self.line11 = QLineEdit()
+        self.prompt12 = QLabel("Earned")
+        self.line12 = QLineEdit()
 
         self.b1 = QPushButton("Cancel")
         self.b2 = QPushButton("Create")
@@ -577,17 +586,29 @@ class StartEmployeeRole (QWidget):
 
         self.hbox1.addWidget(self.prompt1)
         self.hbox1.addWidget(self.line1)
-        self.hbox2.addWidget(self.b1)
-        self.hbox2.addWidget(self.b2)
+        self.hbox10.addWidget(self.prompt10)
+        self.hbox10.addWidget(self.line10)
+        self.hbox11.addWidget(self.prompt11)
+        self.hbox11.addWidget(self.line11)
+        self.hbox12.addWidget(self.prompt12)
+        self.hbox12.addWidget(self.line12)
+        self.hbox14.addWidget(self.b1)
+        self.hbox14.addWidget(self.b2)
 
 
         self.vbox.addLayout(self.hbox1)
-        self.vbox.addLayout(self.hbox2)
+        self.vbox.addLayout(self.hbox10)
+        self.vbox.addLayout(self.hbox11)
+        self.vbox.addLayout(self.hbox12)
+        self.vbox.addLayout(self.hbox14)
         self.vbox.addWidget(self.b3)
         self.setLayout(self.vbox)
 
     def on_b1_click(self):
         self.line1.setText("")
+        self.line10.setText("")
+        self.line11.setText("")
+        self.line12.setText("")
 
     def on_b2_click(self):
         mydb = s.connect(
@@ -597,7 +618,7 @@ class StartEmployeeRole (QWidget):
             password = 'Kyle3231pw!')
         startemprole = mydb.cursor()
         try:
-            args = [self.line1.text()]
+            args = [self.line1.text(), self.line10.text(), int(self.line11.text()), int(self.line12.text())]
             startemprole.callproc("start_employee_role", args)
             mydb.commit()
             startemprole.close()
