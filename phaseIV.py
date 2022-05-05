@@ -1410,6 +1410,15 @@ class AccountTransfer (QWidget):
         self.b3 = QPushButton("Display Bank Stats")
         self.b4 = QPushButton("Display Customer Stats")
         self.b5 = QPushButton("Display Employee Stats")
+        self.b6 = QPushButton("Return To Admin Home")
+
+        self.b1.clicked.connect(self.on_b1_click)
+        self.b2.clicked.connect(self.on_b2_click)
+        self.b3.clicked.connect(self.on_b3_click)
+        self.b4.clicked.connect(self.on_b4_click)
+        self.b5.clicked.connect(self.on_b5_click)
+        self.b6.clicked.connect(self.on_b6_click)
+
         self.vbox = QVBoxLayout()
 
         self.vbox.addWidget(self.b1)
@@ -1417,8 +1426,39 @@ class AccountTransfer (QWidget):
         self.vbox.addWidget(self.b3)
         self.vbox.addWidget(self.b4)
         self.vbox.addWidget(self.b5)
+        self.vbox.addWidget(self.b6)
 
         self.setLayout(self.vbox)
+
+    def on_b1_click(self):
+        self.accountStats = DisplayAccountStats()
+        self.accountStats.show()
+        self.close()
+
+    def on_b2_click(self):
+        self.corpStats = DisplayCorporationStats()
+        self.corpStats.show()
+        self.close()
+
+    def on_b3_click(self):
+        self.bankStats = DisplayBankStats()
+        self.bankStats.show()
+        self.close()
+
+    def on_b4_click(self):
+        self.custStats = DisplayCustomerStats()
+        self.custStats.show()
+        self.close()
+
+    def on_b5_click(self):
+        self.empStats = DisplayEmployeeStats()
+        self.empStats.show()
+        self.close()
+
+    def on_b6_click(self):
+        self.adHome = AdminHome()
+        self.adHome.show()
+        self.close()
 
         
         
