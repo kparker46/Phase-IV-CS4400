@@ -136,6 +136,7 @@ class AdminHome (QWidget):
         self.b6 = QPushButton("Hire Worker")
         self.b6.clicked.connect(self.on_b6_click)
         self.b7 = QPushButton("Pay Employees")
+        self.b7.clicked.connect(self.on_b7_click)
         self.b8 = QPushButton("Replace Manager")
         self.b8.clicked.connect(self.on_b8_click)
         self.b9 = QPushButton("Manage Accounts")
@@ -189,6 +190,11 @@ class AdminHome (QWidget):
         self.w.show()
         self.close()
 
+    def on_b7_click(self):
+        self.w = PayEmployeesA()
+        self.w.show()
+        self.close()
+
     def on_b8_click(self):
         self.w = ReplaceManager()
         self.w.show()
@@ -224,7 +230,9 @@ class ManagerHome (QWidget):
         self.setLayout(self.vbox)
 
     def on_b1_click(self):
-        pass
+        self.w = PayEmployeesM()
+        self.w.show()
+        self.close()
 
 
     def on_b2_click(self):
@@ -2746,6 +2754,91 @@ class DisplayEmployeeStats (QWidget):
         self.stats = ViewStats()
         self.stats.show()
         self.close()
+
+
+
+
+class PayEmployeesA (QWidget):
+    def __init__(self):
+        super().__init__()
+
+        self.setWindowTitle("Pay Employees")
+
+        self.vbox = QVBoxLayout()
+
+        self.b1 = QPushButton("Pay Now")
+        self.b1.clicked.connect(self.on_b1_click)
+        self.b2 = QPushButton("Return Home")
+        self.b2.clicked.connect(self.on_b2_click)
+
+        self.vbox.addWidget(self.b1)
+        self.vbox.addWidget(self.b2)
+        self.setLayout(self.vbox)
+
+
+
+
+    def on_b1_click(self):
+        mydb = s.connect(
+        host = 'localhost',
+        database = 'bank_management',
+        username = 'root',
+        password = 'barnsley')
+        pay = mydb.cursor()
+        try:
+            pay.callproc("pay_employees")
+            mydb.commit()
+            pay.close()
+            mydb.close()
+        except:
+            self.setWindowTitle("Error Occurred!")
+
+
+    def on_b2_click(self):
+        self.w = AdminHome()
+        self.w.show()
+        self.close()
+
+class PayEmployeesM (QWidget):
+    def __init__(self):
+        super().__init__()
+
+        self.setWindowTitle("Pay Employees")
+
+        self.vbox = QVBoxLayout()
+
+        self.b1 = QPushButton("Pay Now")
+        self.b1.clicked.connect(self.on_b1_click)
+        self.b2 = QPushButton("Return Home")
+        self.b2.clicked.connect(self.on_b2_click)
+
+        self.vbox.addWidget(self.b1)
+        self.vbox.addWidget(self.b2)
+        self.setLayout(self.vbox)
+
+
+    def on_b1_click(self):
+        mydb = s.connect(
+        host = 'localhost',
+        database = 'bank_management',
+        username = 'root',
+        password = 'barnsley')
+        pay = mydb.cursor()
+        try:
+            pay.callproc("pay_employees")
+            mydb.commit()
+            pay.close()
+            mydb.close()
+        except:
+            self.setWindowTitle("Error Occurred!")
+
+    def on_b2_click(self):
+        self.w = ManagerHome()
+        self.w.show()
+        self.close()
+
+
+
 
 
 if __name__ == '__main__':
